@@ -3,41 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ubaidullah Gaffoor | Engineer</title>
+    <title>Ubaidullah Gaffoor | Senior Engineer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Ubaidullah Gaffoor</h1>
-        <h2>Engineer</h2>
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Ubaidullah Gaffoor</h1>
+            <p class="hero-subtitle">Electrical & Electronics Engineer</p>
+            <p class="hero-tagline">I am the laanie</p>
+            <div class="social-links">
+                <a href="mailto:ubaidullah.gaf@gmail.com" class="btn btn-primary">📧 Email</a>
+                <a href="https://linkedin.com/in/ubaidullahgaffoor" class="btn btn-secondary" target="_blank">💼 LinkedIn</a>
+                <a href="https://github.com/ubaidullah1111" class="btn btn-secondary" target="_blank">🐙 GitHub</a>
+            </div>
+        </div>
     </header>
-    <section id="skills">
-        <h3>Skills</h3>
-        <ul>
-            <li>Java</li>
-            <li>C</li>
-            <li>C++</li>
-            <li>Python</li>
-            <li>MATLAB</li>
-            <li>Project Management</li>
-        </ul>
-    </section>
-    <section id="projects">
-        <h3>Projects</h3>
-        <ul>
-            <li>Two-wheeled inverted Pendulum Control Robot</li>
-        </ul>
-    </section>
-    <section id="experience">
-        <h3>Experience</h3>
-        <ul>
-            <li>sappi</li>
-        </ul>
-    </section>
-    <section id="education">
-        <h3>Education</h3>
-        <ul>
-            <li>Stellenbosch University</li>
-        </ul>
-    </section>
+
+    <main class="container">
+        <section class="section" id="skills">
+            <h2 class="section-title">🎯 Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">Java</div>
+                <div class="skill-card">C</div>
+                <div class="skill-card">C++</div>
+                <div class="skill-card">Python</div>
+                <div class="skill-card">MATLAB</div>
+                <div class="skill-card">Project Management</div>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <h2 class="section-title">🚀 Projects</h2>
+            <div class="project-card">
+                <h3>Two-wheeled Inverted Pendulum Control Robot</h3>
+                <p class="project-desc">Implemented MEMS 3-axis accelerometer gyroscopic stabilization using a PID controller</p>
+                <div class="tech-stack">
+                    <span class="tech-badge">MATLAB</span>
+                    <span class="tech-badge">Simulink</span>
+                    <span class="tech-badge">Arduino</span>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Ccj8CW6HGzI" class="project-link" target="_blank">Watch Demo →</a>
+            </div>
+        </section>
+
+        <section class="section" id="experience">
+            <h2 class="section-title">💼 Professional Experience</h2>
+            <div class="exp-card">
+                <div class="exp-header">
+                    <h3>Engineer in Training</h3>
+                    <span class="company-badge">Sappi</span>
+                </div>
+                <p class="date">Jan 2025 - Present</p>
+                <p class="achievement">✓ Implemented PILZ safety controller for emergency-stop logic, reducing unplanned downtime and improving line reliability</p>
+            </div>
+        </section>
+
+        <section class="section" id="education">
+            <h2 class="section-title">🎓 Education</h2>
+            <div class="edu-card">
+                <h3>Bachelor of Engineering in Electrical & Electronics Engineering</h3>
+                <p class="university">Stellenbosch University</p>
+                <p class="date">2019 - 2024</p>
+                <h4>Achievements:</h4>
+                <ul>
+                    <li>MSA Education Team Leader</li>
+                    <li>Residence (Metanoia) Muslim Student Society member</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Ubaidullah Gaffoor. All rights reserved.</p>
+    </footer>
 </body>
 </html>
