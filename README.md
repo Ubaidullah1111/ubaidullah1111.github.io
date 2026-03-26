@@ -1,8 +1,8 @@
 # Ubaidullah Gaffoor
-Welcome to my personal portfolio! I’m a graduate from Stellenbosch University.
+Welcome to my personal portfolio! I’m a graduate BEng Electrical and Electronics Engineer from Stellenbosch University.
 
 ## About Me
-I have experience in Arduino, low-code platforms, and technology communities.
+I have experience in Arduino, low-code platforms, and technology communities.  
 
 ## Skills
 - Computer Programming
