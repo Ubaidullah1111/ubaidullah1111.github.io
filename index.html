@@ -6,6 +6,72 @@
     <title>Ubaidullah Gaffoor | Electrical & Electronics Engineer</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #gameContainer {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 204, 0.05));
+            border: 2px solid rgba(0, 217, 255, 0.4);
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        #gameCanvas {
+            background: #000;
+            border: 3px solid #00d9ff;
+            display: block;
+            margin: 20px auto;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+
+        .game-instructions {
+            color: #00d9ff;
+            text-align: center;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin: 15px 0;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+            color: #0a0e27;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 0;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
+        }
+
+        .game-btn:hover {
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .game-btn:active {
+            transform: translateY(0);
+        }
+
+        .score-display {
+            color: #00d9ff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+    </style>
 </head>
 <body>
     <header class="hero">
@@ -376,10 +442,298 @@
                 <p class="project-highlights"><strong>Highlights:</strong> Reduced unplanned downtime, improved equipment reliability, enhanced safety compliance</p>
             </div>
         </section>
+
+        <!-- SPACE INVADERS MINI GAME -->
+        <section class="section" id="game">
+            <h2 class="section-title">🎮 Take a Break - Space Invaders</h2>
+            <div id="gameContainer">
+                <div class="game-instructions">
+                    <p>🎯 Use ARROW KEYS or A/D to move | SPACEBAR to shoot | Destroy all enemies!</p>
+                </div>
+                <div class="score-display">SCORE: <span id="score">0</span></div>
+                <canvas id="gameCanvas" width="800" height="400"></canvas>
+                <div class="game-controls">
+                    <button class="game-btn" onclick="startGame()">▶ START GAME</button>
+                    <button class="game-btn" onclick="pauseGame()">⏸ PAUSE</button>
+                    <button class="game-btn" onclick="resetGame()">🔄 RESET</button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
         <p>&copy; 2026 Ubaidullah Gaffoor. All rights reserved. | <a href="mailto:ubaidullah.gaf@gmail.com">ubaidullah.gaf@gmail.com</a></p>
     </footer>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let gameRunning = false;
+        let gamePaused = false;
+        let score = 0;
+
+        // Player object
+        const player = {
+            x: canvas.width / 2 - 15,
+            y: canvas.height - 40,
+            width: 30,
+            height: 30,
+            speed: 5,
+            dx: 0
+        };
+
+        // Bullets array
+        let bullets = [];
+
+        // Enemies array
+        let enemies = [];
+
+        // Particle effects
+        let particles = [];
+
+        // Keyboard handling
+        const keys = {};
+        window.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            if (e.key === ' ') {
+                e.preventDefault();
+                shootBullet();
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        // Start game
+        function startGame() {
+            gameRunning = true;
+            gamePaused = false;
+            if (enemies.length === 0) {
+                spawnEnemies();
+            }
+            gameLoop();
+        }
+
+        // Pause game
+        function pauseGame() {
+            gamePaused = !gamePaused;
+        }
+
+        // Reset game
+        function resetGame() {
+            gameRunning = false;
+            gamePaused = false;
+            score = 0;
+            bullets = [];
+            enemies = [];
+            particles = [];
+            player.x = canvas.width / 2 - 15;
+            document.getElementById('score').textContent = '0';
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00d9ff';
+            ctx.font = 'bold 20px Orbitron';
+            ctx.textAlign = 'center';
+            ctx.fillText('SPACE INVADERS', canvas.width / 2, canvas.height / 2 - 20);
+            ctx.font = '14px Orbitron';
+            ctx.fillText('Click START GAME to play', canvas.width / 2, canvas.height / 2 + 20);
+        }
+
+        // Spawn enemies
+        function spawnEnemies() {
+            enemies = [];
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 5; col++) {
+                    enemies.push({
+                        x: col * 120 + 60,
+                        y: row * 60 + 30,
+                        width: 30,
+                        height: 30,
+                        speed: 1 + score / 1000,
+                        direction: 1
+                    });
+                }
+            }
+        }
+
+        // Shoot bullet
+        function shootBullet() {
+            if (gameRunning && !gamePaused) {
+                bullets.push({
+                    x: player.x + player.width / 2 - 2,
+                    y: player.y,
+                    width: 4,
+                    height: 15,
+                    speed: 7
+                });
+            }
+        }
+
+        // Draw player (ship)
+        function drawPlayer() {
+            ctx.fillStyle = '#00d9ff';
+            ctx.shadowColor = 'rgba(0, 217, 255, 0.8)';
+            ctx.shadowBlur = 10;
+            // Triangle ship shape
+            ctx.beginPath();
+            ctx.moveTo(player.x + player.width / 2, player.y);
+            ctx.lineTo(player.x + player.width, player.y + player.height);
+            ctx.lineTo(player.x, player.y + player.height);
+            ctx.closePath();
+            ctx.fill();
+            ctx.shadowColor = 'transparent';
+        }
+
+        // Draw enemies
+        function drawEnemies() {
+            ctx.fillStyle = '#ff006e';
+            ctx.shadowColor = 'rgba(255, 0, 110, 0.8)';
+            ctx.shadowBlur = 10;
+            enemies.forEach(enemy => {
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+            });
+            ctx.shadowColor = 'transparent';
+        }
+
+        // Draw bullets
+        function drawBullets() {
+            ctx.fillStyle = '#33e5ff';
+            ctx.shadowColor = 'rgba(51, 229, 255, 1)';
+            ctx.shadowBlur = 5;
+            bullets.forEach(bullet => {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            });
+            ctx.shadowColor = 'transparent';
+        }
+
+        // Update player position
+        function updatePlayer() {
+            if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
+                player.x -= player.speed;
+            }
+            if (keys['ArrowRight'] || keys['d'] || keys['D']) {
+                player.x += player.speed;
+            }
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+        }
+
+        // Update bullets
+        function updateBullets() {
+            bullets = bullets.filter(bullet => {
+                bullet.y -= bullet.speed;
+                return bullet.y > 0;
+            });
+        }
+
+        // Update enemies
+        function updateEnemies() {
+            let changeDirection = false;
+            enemies.forEach(enemy => {
+                enemy.x += enemy.speed * enemy.direction;
+                if (enemy.x <= 0 || enemy.x + enemy.width >= canvas.width) {
+                    changeDirection = true;
+                }
+            });
+            if (changeDirection) {
+                enemies.forEach(enemy => {
+                    enemy.direction *= -1;
+                    enemy.y += 20;
+                });
+            }
+
+            // Check if enemies reached bottom
+            enemies.forEach(enemy => {
+                if (enemy.y + enemy.height >= canvas.height) {
+                    gameRunning = false;
+                }
+            });
+        }
+
+        // Check collisions
+        function checkCollisions() {
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                for (let j = enemies.length - 1; j >= 0; j--) {
+                    if (
+                        bullets[i].x < enemies[j].x + enemies[j].width &&
+                        bullets[i].x + bullets[i].width > enemies[j].x &&
+                        bullets[i].y < enemies[j].y + enemies[j].height &&
+                        bullets[i].y + bullets[i].height > enemies[j].y
+                    ) {
+                        createExplosion(enemies[j].x + enemies[j].width / 2, enemies[j].y + enemies[j].height / 2);
+                        bullets.splice(i, 1);
+                        enemies.splice(j, 1);
+                        score += 10;
+                        document.getElementById('score').textContent = score;
+                        break;
+                    }
+                }
+            }
+
+            // Check if all enemies defeated
+            if (enemies.length === 0 && gameRunning) {
+                spawnEnemies();
+                score += 50;
+                document.getElementById('score').textContent = score;
+            }
+        }
+
+        // Particle explosion effect
+        function createExplosion(x, y) {
+            for (let i = 0; i < 8; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    life: 30
+                });
+            }
+        }
+
+        // Draw particles
+        function drawParticles() {
+            ctx.fillStyle = '#ff006e';
+            particles.forEach(particle => {
+                ctx.fillRect(particle.x, particle.y, 2, 2);
+            });
+        }
+
+        // Update particles
+        function updateParticles() {
+            particles = particles.filter(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                return p.life > 0;
+            });
+        }
+
+        // Game loop
+        function gameLoop() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (gameRunning && !gamePaused) {
+                updatePlayer();
+                updateBullets();
+                updateEnemies();
+                updateParticles();
+                checkCollisions();
+            }
+
+            drawPlayer();
+            drawEnemies();
+            drawBullets();
+            drawParticles();
+
+            if (gameRunning) {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // Initialize
+        resetGame();
+    </script>
 </body>
 </html>
