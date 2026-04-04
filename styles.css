@@ -286,7 +286,8 @@ body::before {
 
 .statement-box p {
     margin-bottom: 15px;
-    color: var(--text-dark);
+    color: var(--text-lightest);
+    text-shadow: 0 0 5px rgba(0, 217, 255, 0.2);
 }
 
 .statement-box p:last-child {
