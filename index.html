@@ -7,12 +7,285 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <style>
-        #gameContainer {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 204, 0.05));
-            border: 2px solid rgba(0, 217, 255, 0.4);
-            padding: 20px;
+        /* TradeLink Section Styles */
+        .tradelink-hero {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+            border: 2px solid rgba(255, 0, 110, 0.4);
+            padding: 40px;
             margin: 20px 0;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tradelink-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 0, 110, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .tradelink-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tradelink-title {
+            color: #ff006e;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+        }
+
+        .tradelink-tagline {
+            color: #00d9ff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .tradelink-description {
+            color: var(--text-lightest);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            max-width: 900px;
+        }
+
+        .tradelink-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tradelink-feature {
+            background: rgba(0, 217, 255, 0.05);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tradelink-feature:hover {
+            background: rgba(0, 217, 255, 0.15);
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .tradelink-feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .tradelink-feature-title {
+            color: #00d9ff;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .tradelink-feature-desc {
+            color: var(--text-lighter);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .tradelink-tech-stack {
+            background: rgba(255, 0, 110, 0.05);
+            border: 2px solid rgba(255, 0, 110, 0.3);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .tradelink-tech-title {
+            color: #ff006e;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .tech-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-category {
+            background: rgba(255, 0, 110, 0.1);
+            padding: 15px;
+            border-left: 4px solid #ff006e;
+        }
+
+        .tech-category-title {
+            color: #ff006e;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+        }
+
+        .tech-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tech-list li {
+            color: var(--text-lighter);
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .tech-list li:before {
+            content: '→ ';
+            color: #00d9ff;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .tradelink-architecture {
+            background: rgba(0, 217, 255, 0.05);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .arch-title {
+            color: #00d9ff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .arch-component {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 204, 0.1));
+            border: 2px solid rgba(0, 217, 255, 0.4);
+            padding: 15px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .arch-component:hover {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 153, 204, 0.2));
+            border-color: #00d9ff;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .arch-component-name {
+            color: #00d9ff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .arch-component-tech {
+            color: var(--text-lighter);
+            font-size: 0.85rem;
+        }
+
+        .key-features {
+            background: rgba(255, 0, 110, 0.05);
+            border: 2px solid rgba(255, 0, 110, 0.3);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .key-features-title {
+            color: #ff006e;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-item {
+            background: rgba(255, 0, 110, 0.1);
+            padding: 15px;
+            border: 1px solid rgba(255, 0, 110, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 0, 110, 0.2);
+            border-color: #ff006e;
+            box-shadow: 0 0 10px rgba(255, 0, 110, 0.3);
+        }
+
+        .feature-item-title {
+            color: #ff006e;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-item-desc {
+            color: var(--text-lighter);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, #ff006e 0%, #c71d5e 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .cta-btn:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 110, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .cta-btn-secondary {
+            background: transparent;
+            color: #00d9ff;
+            border: 2px solid #00d9ff;
+        }
+
+        .cta-btn-secondary:hover {
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
         }
 
         #gameCanvas {
@@ -59,10 +332,6 @@
             transform: translateY(-2px);
         }
 
-        .game-btn:active {
-            transform: translateY(0);
-        }
-
         .score-display {
             color: #00d9ff;
             font-size: 1.2rem;
@@ -70,6 +339,14 @@
             text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
             margin: 10px 0;
             letter-spacing: 2px;
+        }
+
+        #gameContainer {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 204, 0.05));
+            border: 2px solid rgba(0, 217, 255, 0.4);
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
         }
     </style>
 </head>
@@ -97,7 +374,7 @@
         <section class="section" id="about">
             <h2 class="section-title">📝 Professional Summary</h2>
             <div class="statement-box">
-                <p>Electrical & Electronic Engineer with strong hands-on experience in brownfield industrial projects across automation, control systems, power systems, and power electronics infrastructure. Expertise in designing and commissioning engineered solutions, executing technology upgrades, driving production-line improvements, and applying structured root-cause analysis to operational breakdowns. Proven capability in managing full project lifecycles from concept through installation, testing, and commissioning.</p>
+                <p>Electrical & Electronic Engineer with strong hands-on experience in brownfield industrial projects across automation, control systems, power systems, and power electronics infrastructure. Expertise in designing and commissioning engineered solutions, executing technology upgrades, driving production-line improvements, and applying structured root-cause analysis to operational breakdowns.</p>
                 <p>Known for being a fast learner with a practical, problem-solving mindset. Continuously pursuing professional development through certifications in Lean Six Sigma, Quality Management, Project Management, and AI/ML. Seeking opportunities in innovative engineering teams focused on sustainable and technologically advanced industrial solutions.</p>
             </div>
         </section>
@@ -443,6 +720,168 @@
             </div>
         </section>
 
+        <!-- TRADELINK MARKETPLACE SHOWCASE -->
+        <section class="section" id="tradelink">
+            <div class="tradelink-hero">
+                <div class="tradelink-content">
+                    <h2 class="tradelink-title">🔧 TradeLink Marketplace</h2>
+                    <p class="tradelink-tagline">Uber for Skilled Workers - Enterprise-Grade Platform Architecture</p>
+                    <p class="tradelink-description">
+                        Leading the design and architecture of a comprehensive two-sided marketplace connecting verified skilled workers (plumbers, electricians, carpenters, painters) with homeowners and business owners. TradeLink combines enterprise-grade technology with user-centric design to revolutionize the skilled trades industry.
+                    </p>
+
+                    <!-- Key Features -->
+                    <div class="key-features">
+                        <h3 class="key-features-title">⚡ Core Platform Features</h3>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <div class="feature-item-title">📍 Proximity Search</div>
+                                <div class="feature-item-desc">PostGIS-powered location-based matching with configurable service radius and real-time worker availability</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-item-title">⭐ Two-Way Ratings</div>
+                                <div class="feature-item-desc">Bidirectional review system ensuring platform integrity and accountability for all participants</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-item-title">✅ Admin Verification</div>
+                                <div class="feature-item-desc">State machine-based verification workflow with document validation (ID, License, Insurance)</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-item-title">💳 Stripe Connect Escrow</div>
+                                <div class="feature-item-desc">Secure multi-party payment processing with manual capture and automatic dispute resolution</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-item-title">📅 Instant Booking</div>
+                                <div class="feature-item-desc">Concurrency-controlled instant booking with 2-hour auto-expiration and cancellation policies</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-item-title">💬 Real-Time Chat</div>
+                                <div class="feature-item-desc">Socket.io-powered live messaging between workers and customers with message persistence</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Architecture -->
+                    <div class="tradelink-architecture">
+                        <h3 class="arch-title">🏗️ Modular Monolith Architecture</h3>
+                        <div class="architecture-diagram">
+                            <div class="arch-component">
+                                <div class="arch-component-name">Frontend</div>
+                                <div class="arch-component-tech">Next.js 14<br/>TypeScript<br/>Server Components</div>
+                            </div>
+                            <div class="arch-component">
+                                <div class="arch-component-name">Backend</div>
+                                <div class="arch-component-tech">NestJS<br/>TypeScript<br/>Dependency Injection</div>
+                            </div>
+                            <div class="arch-component">
+                                <div class="arch-component-name">Database</div>
+                                <div class="arch-component-tech">PostgreSQL 16<br/>PostGIS Extension<br/>Row-level Locking</div>
+                            </div>
+                            <div class="arch-component">
+                                <div class="arch-component-name">Real-Time</div>
+                                <div class="arch-component-tech">Socket.io<br/>Redis Cache<br/>BullMQ Queues</div>
+                            </div>
+                            <div class="arch-component">
+                                <div class="arch-component-name">Payments</div>
+                                <div class="arch-component-tech">Stripe Connect<br/>Webhook Handling<br/>Escrow Model</div>
+                            </div>
+                            <div class="arch-component">
+                                <div class="arch-component-name">DevOps</div>
+                                <div class="arch-component-tech">GitHub Actions<br/>AWS ECS/Fargate<br/>CloudFront</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div class="tradelink-tech-stack">
+                        <h3 class="tradelink-tech-title">💻 Full Technology Stack</h3>
+                        <div class="tech-categories">
+                            <div class="tech-category">
+                                <div class="tech-category-title">Frontend</div>
+                                <ul class="tech-list">
+                                    <li>Next.js 14 (App Router)</li>
+                                    <li>TypeScript</li>
+                                    <li>TailwindCSS</li>
+                                    <li>React Query</li>
+                                    <li>Mapbox GL</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <div class="tech-category-title">Backend</div>
+                                <ul class="tech-list">
+                                    <li>NestJS</li>
+                                    <li>TypeScript</li>
+                                    <li>Socket.io</li>
+                                    <li>Stripe SDK</li>
+                                    <li>TypeORM</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <div class="tech-category-title">Database & Cache</div>
+                                <ul class="tech-list">
+                                    <li>PostgreSQL 16</li>
+                                    <li>PostGIS Spatial</li>
+                                    <li>Redis</li>
+                                    <li>BullMQ</li>
+                                    <li>Elasticsearch</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <div class="tech-category-title">Infrastructure</div>
+                                <ul class="tech-list">
+                                    <li>AWS ECS Fargate</li>
+                                    <li>AWS S3 + CloudFront</li>
+                                    <li>GitHub Actions</li>
+                                    <li>Sentry Monitoring</li>
+                                    <li>Datadog APM</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid of Features -->
+                    <div class="tradelink-grid">
+                        <div class="tradelink-feature">
+                            <div class="tradelink-feature-icon">🔐</div>
+                            <div class="tradelink-feature-title">Enterprise Security</div>
+                            <div class="tradelink-feature-desc">Document verification pipeline, PCI compliance, encrypted payment flows, JWT authentication, row-level security</div>
+                        </div>
+                        <div class="tradelink-feature">
+                            <div class="tradelink-feature-icon">⚙️</div>
+                            <div class="tradelink-feature-title">Scalable Architecture</div>
+                            <div class="tradelink-feature-desc">Modular monolith design ready for microservices, containerized deployment, horizontal scaling, Redis-backed caching</div>
+                        </div>
+                        <div class="tradelink-feature">
+                            <div class="tradelink-feature-icon">🌍</div>
+                            <div class="tradelink-feature-title">Geospatial Intelligence</div>
+                            <div class="tradelink-feature-desc">PostGIS proximity queries, multi-language support, timezone integrity, geofencing capabilities, service radius polygons</div>
+                        </div>
+                        <div class="tradelink-feature">
+                            <div class="tradelink-feature-icon">💰</div>
+                            <div class="tradelink-feature-title">Payment Processing</div>
+                            <div class="tradelink-feature-desc">Stripe Connect escrow model, automatic dispute resolution, dynamic fee calculation, multi-currency support</div>
+                        </div>
+                        <div class="tradelink-feature">
+                            <div class="tradelink-feature-icon">📊</div>
+                            <div class="tradelink-feature-title">Analytics & Insights</div>
+                            <div class="tradelink-feature-desc">Real-time dashboards, worker performance metrics, customer satisfaction trends, revenue forecasting</div>
+                        </div>
+                        <div class="tradelink-feature">
+                            <div class="tradelink-feature-icon">🚀</div>
+                            <div class="tradelink-feature-title">DevOps Excellence</div>
+                            <div class="tradelink-feature-desc">CI/CD pipelines, container orchestration, zero-downtime deployments, automated testing, monitoring & alerting</div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="cta-buttons">
+                        <a href="mailto:ubaidullah.gaf@gmail.com" class="cta-btn">💬 Discuss Project</a>
+                        <a href="#" class="cta-btn cta-btn-secondary">📊 View Architecture Docs</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- SPACE INVADERS MINI GAME -->
         <section class="section" id="game">
             <h2 class="section-title">🎮 Take a Break - Space Invaders</h2>
@@ -472,7 +911,6 @@
         let gamePaused = false;
         let score = 0;
 
-        // Player object
         const player = {
             x: canvas.width / 2 - 15,
             y: canvas.height - 40,
@@ -482,16 +920,10 @@
             dx: 0
         };
 
-        // Bullets array
         let bullets = [];
-
-        // Enemies array
         let enemies = [];
-
-        // Particle effects
         let particles = [];
 
-        // Keyboard handling
         const keys = {};
         window.addEventListener('keydown', (e) => {
             keys[e.key] = true;
@@ -504,7 +936,6 @@
             keys[e.key] = false;
         });
 
-        // Start game
         function startGame() {
             gameRunning = true;
             gamePaused = false;
@@ -514,12 +945,10 @@
             gameLoop();
         }
 
-        // Pause game
         function pauseGame() {
             gamePaused = !gamePaused;
         }
 
-        // Reset game
         function resetGame() {
             gameRunning = false;
             gamePaused = false;
@@ -539,7 +968,6 @@
             ctx.fillText('Click START GAME to play', canvas.width / 2, canvas.height / 2 + 20);
         }
 
-        // Spawn enemies
         function spawnEnemies() {
             enemies = [];
             for (let row = 0; row < 3; row++) {
@@ -556,7 +984,6 @@
             }
         }
 
-        // Shoot bullet
         function shootBullet() {
             if (gameRunning && !gamePaused) {
                 bullets.push({
@@ -569,12 +996,10 @@
             }
         }
 
-        // Draw player (ship)
         function drawPlayer() {
             ctx.fillStyle = '#00d9ff';
             ctx.shadowColor = 'rgba(0, 217, 255, 0.8)';
             ctx.shadowBlur = 10;
-            // Triangle ship shape
             ctx.beginPath();
             ctx.moveTo(player.x + player.width / 2, player.y);
             ctx.lineTo(player.x + player.width, player.y + player.height);
@@ -584,7 +1009,6 @@
             ctx.shadowColor = 'transparent';
         }
 
-        // Draw enemies
         function drawEnemies() {
             ctx.fillStyle = '#ff006e';
             ctx.shadowColor = 'rgba(255, 0, 110, 0.8)';
@@ -595,7 +1019,6 @@
             ctx.shadowColor = 'transparent';
         }
 
-        // Draw bullets
         function drawBullets() {
             ctx.fillStyle = '#33e5ff';
             ctx.shadowColor = 'rgba(51, 229, 255, 1)';
@@ -606,7 +1029,6 @@
             ctx.shadowColor = 'transparent';
         }
 
-        // Update player position
         function updatePlayer() {
             if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
                 player.x -= player.speed;
@@ -618,7 +1040,6 @@
             if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
         }
 
-        // Update bullets
         function updateBullets() {
             bullets = bullets.filter(bullet => {
                 bullet.y -= bullet.speed;
@@ -626,7 +1047,6 @@
             });
         }
 
-        // Update enemies
         function updateEnemies() {
             let changeDirection = false;
             enemies.forEach(enemy => {
@@ -642,7 +1062,6 @@
                 });
             }
 
-            // Check if enemies reached bottom
             enemies.forEach(enemy => {
                 if (enemy.y + enemy.height >= canvas.height) {
                     gameRunning = false;
@@ -650,7 +1069,6 @@
             });
         }
 
-        // Check collisions
         function checkCollisions() {
             for (let i = bullets.length - 1; i >= 0; i--) {
                 for (let j = enemies.length - 1; j >= 0; j--) {
@@ -670,7 +1088,6 @@
                 }
             }
 
-            // Check if all enemies defeated
             if (enemies.length === 0 && gameRunning) {
                 spawnEnemies();
                 score += 50;
@@ -678,7 +1095,6 @@
             }
         }
 
-        // Particle explosion effect
         function createExplosion(x, y) {
             for (let i = 0; i < 8; i++) {
                 particles.push({
@@ -691,7 +1107,6 @@
             }
         }
 
-        // Draw particles
         function drawParticles() {
             ctx.fillStyle = '#ff006e';
             particles.forEach(particle => {
@@ -699,7 +1114,6 @@
             });
         }
 
-        // Update particles
         function updateParticles() {
             particles = particles.filter(p => {
                 p.x += p.vx;
@@ -709,7 +1123,6 @@
             });
         }
 
-        // Game loop
         function gameLoop() {
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -732,7 +1145,6 @@
             }
         }
 
-        // Initialize
         resetGame();
     </script>
 </body>
