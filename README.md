@@ -2,7 +2,7 @@
 
 **Electrical & Electronics Engineer | Control Systems | Industrial Automation**
 
-📍 Cape Town, South Africa 🇿🇦
+📍 South Africa 🇿🇦
 
 I am a BEng Electrical and Electronics Engineering graduate from Stellenbosch University with a strong hands-on background in industrial projects, automation, control systems, and power infrastructure. I thrive at the intersection of practical problem-solving and technological innovation, continuously expanding my toolkit with skills in AI/ML, data management, and lean engineering.
 
